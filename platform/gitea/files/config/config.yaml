@@ -19,14 +19,10 @@ repositories:
       source: https://github.com/hur/homelab
       mirror: false
     hook: true
-  - name: blog
-    owner: khuedoan
+  - name: homelab
+    owner: ops
+    private: false
     migrate:
-      source: https://github.com/khuedoan/blog
-      mirror: true
+      source: https://github.com/hur/homelab-blog
+      mirror: false
     hook: true
-  - name: backstage
-    owner: khuedoan
-    migrate:
-      source: https://github.com/khuedoan/backstage
-      mirror: true
