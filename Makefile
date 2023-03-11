@@ -33,7 +33,7 @@ tools:
 		--tty \
 		--network host \
 		--env "KUBECONFIG=${KUBECONFIG}" \
-		--volume "/var/run/user/1000/docker.sock:/var/run/docker.sock" \
+		--volume "/var/run/docker.sock:/var/run/docker.sock" \
 		--volume $(shell pwd):$(shell pwd) \
 		--volume ${HOME}/.ssh:/root/.ssh \
 		--volume ${HOME}/.terraform.d:/root/.terraform.d \
