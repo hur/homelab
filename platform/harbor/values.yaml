@@ -2,8 +2,8 @@ harbor:
   expose:
     ingress:
       hosts:
-        core: harbor.khuedoan.com
-        notary: notary.khuedoan.com
+        core: harbor.atte.cloud
+        notary: notary.atte.cloud
       className: nginx
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -16,7 +16,7 @@ harbor:
       secret:
         secretName: harbor-tls-certificate
         notarySecretName: notary-tls-certificate
-  externalURL: https://harbor.khuedoan.com
+  externalURL: https://harbor.atte.cloud
   persistence:
     enabled: true
     resourcePolicy: keep
