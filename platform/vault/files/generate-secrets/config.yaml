@@ -12,8 +12,8 @@
       length: 32
       special: false
 
-# Trow
-- path: trow/admin
+# Harbor
+- path: harbor/admin
   data:
     - key: password
       length: 32
