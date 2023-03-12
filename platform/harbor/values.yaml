@@ -12,7 +12,6 @@ harbor:
         ingress.kubernetes.io/proxy-body-size: "0"
         nginx.ingress.kubernetes.io/ssl-redirect: "true"
         nginx.ingress.kubernetes.io/proxy-body-size: "0"
-      
       tls: true
     notary:
       hostname: notary.atte.cloud
@@ -28,9 +27,5 @@ harbor:
   persistence:
     enabled: true
     resourcePolicy: keep
-  core:
-    secretName: harbor-tls-certificate
-  notary:
-    secretName: notary-tls-certificate
   redis:
     enabled: true
