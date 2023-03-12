@@ -4,6 +4,7 @@ metadata:
   name: pull-request
   namespace: tekton-workflows
 spec:
+  serviceAccountName: tekton-pipeline-runner
   triggers:
     - event:
         type: pull_request
