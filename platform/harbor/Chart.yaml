@@ -3,5 +3,5 @@ name: harbor
 version: 0.0.0
 dependencies:
 - name: harbor
-  version: 1.11.0
-  repository: https://helm.goharbor.io
+  version: 16.4.5
+  repository: https://charts.bitnami.com/bitnami
