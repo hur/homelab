@@ -17,5 +17,5 @@ spec:
     spec:
       containers:
         - name: blog
-          image: harbor.atte.cloud/blog:latest
+          image: harbor.atte.cloud/library/blog:latest
           imagePullPolicy: Always
