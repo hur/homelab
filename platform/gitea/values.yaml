@@ -24,6 +24,8 @@ gitea:
         ROOT_URL: https://git.atte.cloud
       webhook:
         ALLOWED_HOST_LIST: private
+      service:
+        REGISTER_MANUAL_CONFIRM: true
   persistence:
     storageClass: longhorn
   postgresql:
