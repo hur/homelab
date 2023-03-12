@@ -2,7 +2,7 @@ harbor:
   expose:
     ingress:
       hosts:
-        core: harbor.atte.cloud
+        core: registry.atte.cloud
         notary: notary.atte.cloud
       className: nginx
       annotations:
@@ -16,7 +16,7 @@ harbor:
       secret:
         secretName: harbor-tls-certificate
         notarySecretName: notary-tls-certificate
-  externalURL: https://harbor.atte.cloud
+  externalURL: https://registry.atte.cloud
   persistence:
     enabled: true
     resourcePolicy: keep
