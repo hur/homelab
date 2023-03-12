@@ -25,7 +25,7 @@ harbor:
       tls: true
   externalURL: https://harbor.atte.cloud
   core:
-    extraEnvVarsSecret: harbor-secrets
+    extraEnvVarsSecret: harbor-secrets # TODO: pull other initial secrets (database, redis) from secrets.
   persistence:
     enabled: true
     resourcePolicy: keep
