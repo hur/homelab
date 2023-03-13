@@ -1,0 +1,26 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: harbor-auth
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: vault
+  target:
+    name: harbor-auth
+    template:
+      engineVersion: v2
+      type: kubernetes.io/dockerconfigjson
+      data:
+        .dockerconfigjson: |
+          {
+            "auths": {
+              "harbor.atte.cloud": {
+                "auth": "{{ printf "%s:%s" (.data | fromYaml).name (.data | fromYaml).secret | b64enc }}"
+              }
+            }
+          }
+  data:
+  - secretKey: data
+    remoteRef:
+      key: /harbor/tekton-robot-account # TODO: rename to just robot account
