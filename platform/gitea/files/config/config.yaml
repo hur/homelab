@@ -20,7 +20,7 @@ repositories:
       mirror: false
     hook: true
   - name: blog
-    owner: hur
+    owner: ops
     private: false
     migrate:
       source: https://github.com/hur/homelab-blog
