@@ -53,6 +53,3 @@ spec:
     - name: harbor-auth 
       secret:
         secretName: tekton-harbor-auth
-        items:
-          - key: .dockerconfigjson
-            path: config.json
