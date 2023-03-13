@@ -19,8 +19,8 @@ repositories:
       source: https://github.com/hur/homelab
       mirror: false
     hook: true
-  - name: homelab
-    owner: ops
+  - name: blog
+    owner: hur
     private: false
     migrate:
       source: https://github.com/hur/homelab-blog
