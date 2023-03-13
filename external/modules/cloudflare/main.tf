@@ -117,3 +117,27 @@ resource "kubernetes_secret" "cert_manager_token" {
     "api-token" = cloudflare_api_token.cert_manager.value
   }
 }
+
+resource "cloudflare_ruleset" "redirect_root_to_www" {
+  zone_id     = data.cloudflare_zone.zone.id
+  name        = "redirect_root_to_www"
+  description = "Redirects requests to the apex domain to www subdomain"
+  kind        = "zone"
+  phase       = "http_request_redirect"
+
+  rules {
+    action = "redirect"
+    action_parameters {
+      from_value {
+        status_code = 301
+        target_url {
+          value = "https://www.atte.cloud"
+        }
+        preserve_query_string = true
+      }
+    }
+    expression = "(starts_with(http.request.full_uri, \"https://atte.cloud\"))"
+    description = "Redirect requests to the apex domain to www subdomain"
+    enabled     = true
+  }
+}
