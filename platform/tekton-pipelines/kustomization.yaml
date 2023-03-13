@@ -20,4 +20,4 @@ resources:
   - workflows/master.yaml
   - workflows/pull-request.yaml
   # other
-  - workflows/serviceaccount.yaml
+  - workflows/harbor-secret.yaml

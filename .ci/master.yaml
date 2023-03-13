@@ -47,6 +47,8 @@ spec:
       workspaces:
         - name: source
           workspace: shared-data
+        - name: dockerconfig
+          workspace: harbor-auth
     - name: test
       runAfter:
         - clone
