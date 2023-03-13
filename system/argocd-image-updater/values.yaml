@@ -6,4 +6,4 @@ config:
       api_url: https://harbor.atte.cloud
       ping: no
       prefix: harbor.atte.cloud/library
-      secret: pullsecret:argocd-image-updater/harbor-auth
+      secret: pullsecret:argocd-image-updater/harbor-auth#harbor-creds

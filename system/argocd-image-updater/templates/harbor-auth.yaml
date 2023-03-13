@@ -10,16 +10,8 @@ spec:
     name: harbor-auth
     template:
       engineVersion: v2
-      type: kubernetes.io/dockerconfigjson
       data:
-        .dockerconfigjson: |
-          {
-            "auths": {
-              "harbor.atte.cloud": {
-                "auth": "{{ printf "%s:%s" (.data | fromYaml).name (.data | fromYaml).secret | b64enc }}"
-              }
-            }
-          }
+        harbor-creds: '{{ printf "{{ ( .data | fromYaml).name }}" }}:{{ printf "{{ ( .data | fromYaml).secret }}" }}'
   data:
   - secretKey: data
     remoteRef:
