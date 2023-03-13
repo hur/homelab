@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/component: pipelinerun-cleaner
     app.kubernetes.io/part-of: tekton
     argocd.argoproj.io/sync-wave: "1"
-spec:
+spec: # TODO: RBAC
   schedule: "*/15 * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
@@ -17,7 +17,6 @@ spec:
       template:
         spec:
           restartPolicy: OnFailure
-          serviceAccount: tekton-pipelinerun-cleaner
           containers:
             - name: kubectl
               image: docker.io/alpine/k8s:1.20.7
