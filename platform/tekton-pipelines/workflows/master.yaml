@@ -4,7 +4,6 @@ metadata:
   name: master
   namespace: tekton-workflows
 spec:
-  serviceAccountName: tekton-pipeline-runner
   triggers:
     - event:
         type: push
