@@ -57,7 +57,7 @@ func main() {
 					num_specials = 0
 				}
 
-				res, err := password.Generate(randomKey.length, 3, num_specials, false, true)
+				res, err := password.Generate(randomKey.Length, 3, num_specials, false, true)
 				if err != nil {
 					log.Fatal(err)
 				}
