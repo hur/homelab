@@ -26,6 +26,7 @@ harbor:
   externalURL: https://harbor.atte.cloud
   core:
     extraEnvVarsSecret: harbor-secrets # TODO: pull other initial secrets (database, redis) from secrets.
+    configOverwriteJsonSecret: harbor-config-overwrite-secret
   persistence:
     enabled: true
     resourcePolicy: keep
