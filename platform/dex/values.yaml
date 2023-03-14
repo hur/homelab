@@ -22,7 +22,7 @@ dex:
         redirectURIs:
           - 'https://grafana.atte.cloud/login/generic_oauth'
         secretEnv: GRAFANA_SSO_CLIENT_SECRET
-      - id: habor-sso
+      - id: harbor-sso
         name: Harbor
         redirectURIs:
           - 'https://harbor.atte.cloud/c/oidc/callback'
