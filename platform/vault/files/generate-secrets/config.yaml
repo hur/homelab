@@ -19,6 +19,12 @@
       length: 32
       special: true
 
+- path: dex/harbor
+  data:
+    - key: client_secret
+      length: 32
+      special: false
+
 # Tekton
 - path: tekton/webhook
   data:

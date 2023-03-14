@@ -22,6 +22,11 @@ dex:
         redirectURIs:
           - 'https://grafana.atte.cloud/login/generic_oauth'
         secretEnv: GRAFANA_SSO_CLIENT_SECRET
+      - id: habor-sso
+        name: Harbor
+        redirectURIs:
+          - 'https://harbor.atte.cloud/c/oidc/callback'
+        secretEnv: HARBOR_SSO_CLIENT_SECRET
   envFrom:
     - secretRef:
         name: dex-secrets
