@@ -42,5 +42,5 @@ spec:
         - group: admissionregistration.k8s.io
           kind: ValidatingWebhookConfiguration
           jqPathExpressions:
-            - .webhooks[*].rules[*].resources
+            - .webhooks[].rules[].resources[] | select(. == "workflows/status")
 {{- end }}
