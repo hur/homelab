@@ -52,4 +52,7 @@ iscsi-initiator-utils
 # Enable iSCSI for Kubernetes storage
 services --enable=iscsid
 
+# Increase number of inotify instances from 128 to 8192
+sysctl fs.inotify.max_user_instances=8192
+
 reboot
