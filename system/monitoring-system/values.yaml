@@ -61,11 +61,11 @@ kube-prometheus-stack:
   kubeProxy:
     enabled: true
     endpoints:
-      - metal0
+      - 192.168.0.100
   kubeEtcd:
     enabled: true
     endpoints:
-      - metal0
+      - 192.168.0.100
     service:
       enabled: true
       port: 2381
