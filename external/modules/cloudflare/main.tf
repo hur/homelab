@@ -118,6 +118,7 @@ resource "kubernetes_secret" "cert_manager_token" {
   }
 }
 
+/*
 resource "cloudflare_ruleset" "redirect_root_to_www" {
   zone_id     = data.cloudflare_zone.zone.id
   name        = "redirect_root_to_www"
@@ -141,3 +142,4 @@ resource "cloudflare_ruleset" "redirect_root_to_www" {
     enabled     = true
   }
 }
+*/
