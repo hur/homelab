@@ -16,12 +16,19 @@ dex:
           clientSecret: $GITEA_CLIENT_SECRET
           redirectURI: https://dex.atte.cloud/callback
           baseURL: https://git.atte.cloud
+          orgs:
+            - name: ops
     staticClients:
       - id: grafana-sso
         name: Grafana
         redirectURIs:
           - 'https://grafana.atte.cloud/login/generic_oauth'
         secretEnv: GRAFANA_SSO_CLIENT_SECRET
+      - id: harbor-sso
+        name: Harbor
+        redirectURIs:
+          - 'https://harbor.atte.cloud/c/oidc/callback'
+        secretEnv: HARBOR_SSO_CLIENT_SECRET
   envFrom:
     - secretRef:
         name: dex-secrets

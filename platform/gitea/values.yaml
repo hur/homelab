@@ -26,6 +26,8 @@ gitea:
         ALLOWED_HOST_LIST: private
       service:
         REGISTER_MANUAL_CONFIRM: true
+      log:
+        ENABLE_ACCESS_LOG: true
   persistence:
     storageClass: longhorn
   postgresql:

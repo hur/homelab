@@ -37,5 +37,10 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - ApplyOutOfSyncOnly=true
-          - ServerSideApply=true
+          - ServerSideApply=false
+      ignoreDifferences: # for tekton workflows bug. TODO: give application manifest to tekton instead.
+        - group: admissionregistration.k8s.io
+          kind: ValidatingWebhookConfiguration
+          jqPathExpressions:
+            - .webhooks[].rules[].resources[] | select(. == "workflows/status")
 {{- end }}

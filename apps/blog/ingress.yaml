@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: &host www.atte.cloud
+    - host: &host atte.cloud
       http:
         paths:
           - pathType: ImplementationSpecific

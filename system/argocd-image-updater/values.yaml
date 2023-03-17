@@ -1,0 +1,9 @@
+config:
+  argocd:
+  serverAddress: https://argocd.atte.cloud
+  registries:
+    - name: harbor
+      api_url: https://harbor.atte.cloud
+      ping: no
+      prefix: harbor.atte.cloud/library
+      secret: pullsecret:argocd-image-updater/harbor-auth#harbor-creds

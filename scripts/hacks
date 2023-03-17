@@ -11,6 +11,7 @@ import requests
 import sys
 import urllib
 
+from requests.auth import HTTPBasicAuth
 from rich.console import Console
 from kubernetes import client, config
 
@@ -29,6 +30,9 @@ vault_host = client.NetworkingV1Api().read_namespaced_ingress('vault', 'vault').
 vault_token = base64.b64decode(client.CoreV1Api().read_namespaced_secret('vault-unseal-keys', 'vault').data['vault-root']).decode("utf-8")
 vault_url = f"https://{vault_host}"
 
+harbor_host = client.NetworkingV1Api().read_namespaced_ingress('harbor-ingress', 'harbor').spec.rules[0].host
+harbor_pass = base64.b64decode(client.CoreV1Api().read_namespaced_secret('harbor-secrets', 'harbor').data['HARBOR_ADMIN_PASSWORD']).decode("utf-8")
+harbor_url = f"https://{harbor_host}"
 
 def create_vault_secret(path: str, data) -> None:
     requests.post(
@@ -102,6 +106,131 @@ def setup_gitea_oauth_app(name: str, redirect_uri: str) -> None:
             sys.exit(1)
 
 
+def setup_harbor_robot_account(name: str) -> None:
+    resp = requests.get(
+        url=f"{harbor_url}/api/v2.0/robots?q=" + requests.utils.quote(f"exact match(name=robot${name})"),
+        auth=HTTPBasicAuth('admin', harbor_pass)
+    )
+
+    if resp.status_code != 200:
+        print(f"Error checking for existing Harbor robot account for Tekton ({resp.status_code})")
+        print(resp.content)
+        sys.exit(1)
+    robots = resp.json()
+    if not any(robot['name'] == f"robot${name}" for robot in robots):
+        # create robot account for tekton
+        resp = requests.post(
+            url=f"{harbor_url}/api/v2.0/robots",
+            headers={
+                'Content-Type': 'application/json'
+            },
+            auth=HTTPBasicAuth('admin', harbor_pass),
+            data=json.dumps({
+                "name": name,
+                "duration": -1,  # no expiry
+                "description": "Robot account for tekton pipelines",
+                "disable": False,
+                "level": "system", 
+                "permissions": [
+                    {
+                    "namespace": "*",  # TODO: finer grained permissions
+                    "kind": "project",
+                    "access": [
+                        {
+                        "resource": "repository",
+                        "action": "list"
+                        },
+                        {
+                        "resource": "repository",
+                        "action": "pull"
+                        },
+                        {
+                        "resource": "repository",
+                        "action": "push"
+                        },
+                        {
+                        "resource": "repository",
+                        "action": "delete"
+                        },
+                        {
+                        "resource": "artifact",
+                        "action": "read"
+                        },
+                        {
+                        "resource": "artifact",
+                        "action": "list"
+                        },
+                        {
+                        "resource": "artifact",
+                        "action": "delete"
+                        },
+                        {
+                        "resource": "artifact-label",
+                        "action": "create"
+                        },
+                        {
+                        "resource": "artifact-label",
+                        "action": "delete"
+                        },
+                        {
+                        "resource": "tag",
+                        "action": "create"
+                        },
+                        {
+                        "resource": "tag",
+                        "action": "delete"
+                        },
+                        {
+                        "resource": "tag",
+                        "action": "list"
+                        },
+                        {
+                        "resource": "scan",
+                        "action": "create"
+                        },
+                        {
+                        "resource": "scan",
+                        "action": "stop"
+                        },
+                        {
+                        "resource": "helm-chart",
+                        "action": "read"
+                        },
+                        {
+                        "resource": "helm-chart-version",
+                        "action": "create"
+                        },
+                        {
+                        "resource": "helm-chart-version",
+                        "action": "delete"
+                        },
+                        {
+                        "resource": "helm-chart-version-label",
+                        "action": "create"
+                        },
+                        {
+                        "resource": "helm-chart-version-label",
+                        "action": "delete"
+                        }
+                    ]
+                    }
+                ]
+                })
+        )
+        if resp.status_code == 201:
+            create_vault_secret(
+                f"harbor/tekton-robot-account",
+                {
+                    'name': resp.json()['name'],
+                    'secret': resp.json()['secret']
+                }
+            )
+        else:
+            print(f"Error creating Harbor robot account for Tekton ({resp.status_code})")
+            print(resp.content)
+            sys.exit(1)
+    
+
 def main() -> None:
 
     with Console().status("Completing the remaining sorcery"):
@@ -118,6 +247,8 @@ def main() -> None:
 
         for app in gitea_oauth_apps:
             setup_gitea_oauth_app(app['name'], app['redirect_uri'])
+        
+        setup_harbor_robot_account('tekton')
 
 
 if __name__ == '__main__':

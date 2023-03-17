@@ -1,40 +1,16 @@
-# Khue's Homelab
+# Atte's Homelab
+![Blog](https://img.shields.io/website?down_message=down&label=blog&style=flat-square&up_message=up&url=https%3A%2F%2Fwww.atte.cloud)
 
-**[Features](#features) • [Get Started](#get-started) • [Documentation](https://homelab.khuedoan.com)**
-
-[![tag](https://img.shields.io/github/v/tag/khuedoan/homelab?style=flat-square&logo=semver&logoColor=white)](https://github.com/khuedoan/homelab/tags)
-[![document](https://img.shields.io/website?label=document&logo=gitbook&logoColor=white&style=flat-square&url=https%3A%2F%2Fhomelab.khuedoan.com)](https://homelab.khuedoan.com)
-[![license](https://img.shields.io/github/license/khuedoan/homelab?style=flat-square&logo=gnu&logoColor=white)](https://www.gnu.org/licenses/gpl-3.0.html)
-[![stars](https://img.shields.io/github/stars/khuedoan/homelab?logo=github&logoColor=white&color=gold&style=flat-square)](https://github.com/khuedoan/homelab)
+Initial setup based on [khuedoan/homelab](https://github.com/khuedoan/homelab)
 
 This project utilizes [Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) and [GitOps](https://www.weave.works/technologies/gitops) to automate provisioning, operating, and updating self-hosted services in my homelab.
-It can be used as a highly customizable framework to build your own homelab.
-
-> **What is a homelab?**
->
-> Homelab is a laboratory at home where you can self-host, experiment with new technologies, practice for certifications, and so on.
-> For more information about homelab in general, see the [r/homelab introduction](https://www.reddit.com/r/homelab/wiki/introduction).
-
-## Overview
-
-Project status: **ALPHA**
-
-This project is still in the experimental stage, and I don't use anything critical on it.
-Expect breaking changes that may require a complete redeployment.
-A proper upgrade path is planned for the stable release.
-More information can be found in [the roadmap](#roadmap) below.
 
 ### Hardware
 
-![Hardware](https://user-images.githubusercontent.com/27996771/98970963-25137200-2543-11eb-8f2d-f9a2d45756ef.JPG)
-
-- 4 × NEC SFF `PC-MK26ECZDR` (Japanese version of the ThinkCentre M700):
-    - CPU: `Intel Core i5-6600T @ 2.70GHz`
+- ThinkPad x1 Carbon 7th gen
+    - CPU: `Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz`
     - RAM: `16GB`
-    - SSD: `128GB`
-- TP-Link `TL-SG108` switch:
-    - Ports: `8`
-    - Speed: `1000Mbps`
+    - SSD: `256GB`
 
 ### Features
 
@@ -42,7 +18,6 @@ More information can be found in [the roadmap](#roadmap) below.
 - [x] Automated bare metal provisioning with PXE boot
 - [x] Automated Kubernetes installation and management
 - [x] Installing and managing applications using GitOps
-- [x] Automatic rolling upgrade for OS and Kubernetes
 - [x] Automatically update apps (with approval)
 - [x] Modular architecture, easy to add or remove features/components
 - [x] Automated certificate management
@@ -51,50 +26,13 @@ More information can be found in [the roadmap](#roadmap) below.
 - [x] Expose services to the internet securely with [Cloudflare Tunnel](https://www.cloudflare.com/products/tunnel/)
 - [x] CI/CD platform
 - [x] Private container registry
-- [x] Distributed storage
-- [x] Support multiple environments (dev, prod)
+- [ ] Automatic rolling upgrade for OS and Kubernetes
+- [ ] Distributed storage
+- [ ] Support multiple environments (dev, prod)
 - [ ] Monitoring and alerting 🚧
-- [ ] Automated offsite backups 🚧
+- [ ] Automated offsite backups
 - [ ] Single sign-on 🚧
-- [x] Infrastructure testing
-
-Some demo videos and screenshots are shown here.
-They can't capture all the project's features, but they are sufficient to get a concept of it.
-
-| Demo                                                                                        |
-| :--:                                                                                        |
-| [![][deploy-demo]](https://asciinema.org/a/xkBRkwC6e9RAzVuMDXH3nGHp7)                       |
-| Deploy with a single command (after updating the configuration files)                       |
-| [![][pxe-demo]](https://www.youtube.com/watch?v=y-d7btNNAT8)                                |
-| PXE boot                                                                                    |
-| [![][homepage-demo]][homepage-demo]                                                         |
-| Homepage with Ingress discovery powered by [Hajimari](https://github.com/toboshii/hajimari) |
-| [![][grafana-demo]][grafana-demo]                                                           |
-| Monitoring dashboard powered by [Grafana](https://grafana.com/)                             |
-| [![][gitea-demo]][gitea-demo]                                                               |
-| Git server powered by [Gitea](https://gitea.io/en-us/)                                      |
-| [![][matrix-demo]][matrix-demo]                                                             |
-| [Matrix](https://matrix.org/) chat server                                                   |
-| [![][tekton-demo]][tekton-demo]                                                             |
-| Continuous integration with [Tekton](https://tekton.dev/)                                   |
-| [![][argocd-demo]][argocd-demo]                                                             |
-| Continuous deployment with [ArgoCD](https://argoproj.github.io/cd/)                         |
-| [![][lens-demo]][lens-demo]                                                                 |
-| Cluster management using [Lens](https://k8slens.dev/)                                       |
-| [![][vault-demo]][vault-demo]                                                               |
-| Secret management with [Vault](https://www.vaultproject.io/)                                |
-
-[deploy-demo]: https://asciinema.org/a/xkBRkwC6e9RAzVuMDXH3nGHp7.svg
-[pxe-demo]: https://user-images.githubusercontent.com/27996771/157303477-df2e7410-8f02-4648-a86c-71e6b7e89e35.png
-[homepage-demo]: https://user-images.githubusercontent.com/27996771/149445807-0f869eb7-d8f5-4fef-ab97-ac281df91a06.png
-[grafana-demo]: https://user-images.githubusercontent.com/27996771/149446631-1c5d056b-1fdc-48e6-96ba-e1abe1762be0.png
-[gitea-demo]: https://user-images.githubusercontent.com/27996771/149444871-38889c9d-862f-41ff-8c05-8ece21da3e9c.png
-[matrix-demo]: https://user-images.githubusercontent.com/27996771/149448510-7163310c-2049-4ccd-901d-f11f605bfc32.png
-[tekton-demo]: https://user-images.githubusercontent.com/27996771/149445374-58fd0605-bb9a-46e4-81d6-5e584d2b94a9.png
-[argocd-demo]: https://user-images.githubusercontent.com/27996771/149444716-fc0d7282-4cf7-4ddb-97a4-1a3fb47ff2b8.png
-[lens-demo]: https://user-images.githubusercontent.com/27996771/149448896-9d79947d-468c-45c6-a81d-b43654e8ab6b.png
-[vault-demo]: https://user-images.githubusercontent.com/27996771/149452309-de4a893b-e94c-4ba8-9119-ea87449cf77e.png
-
+- [ ] Infrastructure testing
 ### Tech stack
 
 <table>
@@ -199,8 +137,8 @@ They can't capture all the project's features, but they are sufficient to get a 
         <td>Cloud native solution for building CI/CD systems</td>
     </tr>
     <tr>
-        <td><img width="32" src="https://trow.io/trow.png"></td>
-        <td><a href="https://trow.io">Trow</a></td>
+        <td><img width="32" src="https://goharbor.io/img/logos/harbor-icon-color.png"></td>
+        <td><a href="https://goharbor.io/">Harbor</a></td>
         <td>Private container registry</td>
     </tr>
     <tr>
@@ -215,24 +153,11 @@ They can't capture all the project's features, but they are sufficient to get a 
     </tr>
 </table>
 
-## Get Started
-
-- [Try it out locally](https://homelab.khuedoan.com/installation/sandbox) without any hardware (just 4 commands!)
-- [Deploy on real hardware](https://homelab.khuedoan.com/installation/production/prerequisites) for production workload
-
-## Roadmap
-
-See [roadmap](https://homelab.khuedoan.com/reference/roadmap) and [open issues](https://github.com/khuedoan/homelab/issues) for a list of proposed features and known issues.
-
-## Contributing
-
-Any contributions you make are greatly appreciated.
-
-Please see [contributing guide](https://homelab.khuedoan.com/reference/contributing) for more information.
-
 ## License
 
-Copyright &copy; 2020 - 2022 Khue Doan
+Copyright &copy; 2023 - Atte Niemi
+
+Copyright &copy; 2020 - 2023 Khue Doan
 
 Distributed under the GPLv3 License.
 See [license page](https://homelab.khuedoan.com/reference/license) or `LICENSE.md` file for more information.
@@ -241,6 +166,7 @@ See [license page](https://homelab.khuedoan.com/reference/license) or `LICENSE.m
 
 References:
 
+- [khuedoan/homelab](https://github.com/khuedoan/homelab)
 - [Ephemeral PXE server inspired by Minimal First Machine in the DC](https://speakerdeck.com/amcguign/minimal-first-machine-in-the-dc)
 - [ArgoCD usage and monitoring configuration in locmai/humble](https://github.com/locmai/humble)
 - [README template](https://github.com/othneildrew/Best-README-Template)
@@ -270,7 +196,3 @@ Big shout-out to them!
 - ![](https://github.com/trangmaiq.png?size=24) [@trangmaiq](https://github.com/trangmaiq)
 
 If you feel you're missing from this list, feel free to add yourself in a PR.
-
-## Stargazers over time
-
-[![Stargazers over time](https://starchart.cc/khuedoan/homelab.svg)](https://starchart.cc/khuedoan/homelab)

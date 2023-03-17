@@ -1,0 +1,20 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: harbor-auth
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: vault
+  target:
+    name: harbor-auth
+    template:
+      engineVersion: v2
+      data:
+        harbor-creds: '{{ printf "{{ ( .data | fromYaml).name }}" }}:{{ printf "{{ ( .data | fromYaml).secret }}" }}'
+  data:
+  - secretKey: data
+    remoteRef:
+      key: /harbor/tekton-robot-account # TODO: rename to just robot account
+      conversionStrategy: Default
+      decodingStrategy: None

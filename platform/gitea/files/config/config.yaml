@@ -18,8 +18,8 @@ repositories:
     migrate:
       source: https://github.com/hur/homelab
       mirror: false
-    hook: true
-  - name: homelab
+    hook: false
+  - name: blog
     owner: ops
     private: false
     migrate:

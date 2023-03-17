@@ -94,6 +94,10 @@ def main() -> None:
         [editor, 'metal/inventories/prod.yml']
     )
 
+    subprocess.run(
+        [editor, 'system/monitoring-system/values.yaml']
+    )
+
 
 if __name__ == '__main__':
     main()

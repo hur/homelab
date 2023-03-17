@@ -19,5 +19,7 @@ resources:
   - workflows/webhook-secret.yaml
   - workflows/master.yaml
   - workflows/pull-request.yaml
-  # other
-  - workflows/serviceaccount.yaml
+  # Authentication to harbor
+  - workflows/harbor-secret.yaml
+  # Clean up old pipelineruns
+  - workflows/pipelinerun-cleaner-job.yaml

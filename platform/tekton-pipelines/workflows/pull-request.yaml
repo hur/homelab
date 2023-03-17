@@ -4,7 +4,6 @@ metadata:
   name: pull-request
   namespace: tekton-workflows
 spec:
-  serviceAccountName: tekton-pipeline-runner
   triggers:
     - event:
         type: pull_request
@@ -43,3 +42,10 @@ spec:
           resources:
             requests:
               storage: 128Mi
+    # for kaniko to be able to push to harbor
+    - name: harbor-auth 
+      secret:
+        secretName: tekton-harbor-auth
+        items:
+          - key: .dockerconfigjson
+            path: config.json
