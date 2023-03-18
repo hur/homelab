@@ -24,21 +24,10 @@ resource "random_password" "tunnel_secret" {
   special = false
 }
 
-resource "random_password" "tunnel_pub_secret" {
-  length  = 64
-  special = false
-}
-
 resource "cloudflare_tunnel" "homelab" {
   account_id = var.cloudflare_account_id
   name       = "homelab"
   secret     = base64encode(random_password.tunnel_secret.result)
-}
-
-resource "cloudflare_tunnel" "homelab_public" {
-  account_id = var.cloudflare_account_id
-  name       = "homelab"
-  secret     = base64encode(random_password.tunnel_pub_secret.result)
 }
 
 # Not proxied, not accessible. Just a record for auto-created CNAMEs by external-dns.
@@ -51,35 +40,9 @@ resource "cloudflare_record" "tunnel" {
   ttl     = 1 # Auto
 }
 
-# Not proxied, not accessible. Just a record for auto-created CNAMEs by external-dns.
-resource "cloudflare_record" "tunnel_public" {
-  zone_id = data.cloudflare_zone.zone.id
-  type    = "CNAME"
-  name    = "public-tunnel"
-  value   = "${cloudflare_tunnel.homelab_public.id}.cfargotunnel.com"
-  proxied = false
-  ttl     = 1 # Auto
-}
-
-resource "kubernetes_secret" "cloudflared_public_tunnel_credentials" {
-  metadata {
-    name      = "cloudflared-credentials"
-    namespace = "cloudflared"
-  }
-
-  data = {
-    "credentials.json" = jsonencode({
-      AccountTag   = var.cloudflare_account_id
-      TunnelName   = cloudflare_tunnel.homelab_public.name
-      TunnelID     = cloudflare_tunnel.homelab_public.id
-      TunnelSecret = base64encode(random_password.tunnel_pub_secret.result)
-    })
-  }
-}
-
 resource "kubernetes_secret" "cloudflared_credentials" {
   metadata {
-    name      = "cloudflared-public-credentials"
+    name      = "cloudflared-credentials"
     namespace = "cloudflared"
   }
 
