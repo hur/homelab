@@ -37,7 +37,7 @@ resource "cloudflare_tunnel" "homelab" {
 
 resource "cloudflare_tunnel" "homelab_public" {
   account_id = var.cloudflare_account_id
-  name       = "homelab"
+  name       = "homelab-public"
   secret     = base64encode(random_password.tunnel_pub_secret.result)
 }
 
@@ -63,8 +63,8 @@ resource "cloudflare_record" "tunnel_public" {
 
 resource "kubernetes_secret" "cloudflared_public_tunnel_credentials" {
   metadata {
-    name      = "cloudflared-credentials"
-    namespace = "cloudflared"
+    name      = "cloudflared-public-credentials"
+    namespace = "cloudflared-public"
   }
 
   data = {
@@ -79,7 +79,7 @@ resource "kubernetes_secret" "cloudflared_public_tunnel_credentials" {
 
 resource "kubernetes_secret" "cloudflared_credentials" {
   metadata {
-    name      = "cloudflared-public-credentials"
+    name      = "cloudflared-credentials"
     namespace = "cloudflared"
   }
 
