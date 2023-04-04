@@ -23,4 +23,25 @@ drone:
     DRONE_SERVER_PROTO: https
     DRONE_GITEA_SERVER: https://git.atte.cloud
 
+drone-runner:
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - host: &host ci-runner.atte.cloud
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: drone-runner-tls-certificate
+        hosts:
+          - *host
+  extraSecretNamesForEnvFrom:
+    - drone-runner-env-secret
+  env:
+    DRONE_RPC_HOST: drone
+    DRONE_RPC_PROTO: https 
+
 
