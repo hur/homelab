@@ -19,6 +19,6 @@ drone:
   env:
     DRONE_SERVER_HOST: ci.atte.cloud
     DRONE_SERVER_PROTO: http
-    DRONE_GITEA_SERVER: https://gitea-http.gitea:3000/
+    DRONE_GITEA_SERVER: http://gitea-http.gitea:3000/
 
 
