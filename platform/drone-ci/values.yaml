@@ -20,7 +20,7 @@ drone:
     - drone-env-secret
   env:
     DRONE_SERVER_HOST: ci.atte.cloud
-    DRONE_SERVER_PROTO: http
+    DRONE_SERVER_PROTO: https
     DRONE_GITEA_SERVER: https://git.atte.cloud
 
 
