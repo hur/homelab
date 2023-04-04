@@ -2,6 +2,8 @@ drone:
   ingress:
     enabled: true
     className: nginx
+    annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
     hosts:
       - host: &host ci.atte.cloud
         paths:
