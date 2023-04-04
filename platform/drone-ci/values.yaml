@@ -3,7 +3,7 @@ drone:
     enabled: true
     className: nginx
     hosts:
-      - host: &host https://ci.atte.cloud
+      - host: &host ci.atte.cloud
         paths:
           - path: /
             pathType: Prefix
