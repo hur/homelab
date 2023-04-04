@@ -240,7 +240,7 @@ def main() -> None:
 
         gitea_oauth_apps = [
             {'name': 'dex', 'redirect_uri': f"https://{client.NetworkingV1Api().read_namespaced_ingress('dex', 'dex').spec.rules[0].host}/callback"},
-            {'name': 'drone', 'redirect_uri': f"https://{client.NetworkingV1Api().read_namespaced_ingress('drone', 'drone').spec.rules[0].host}/callback"}
+            {'name': 'drone', 'redirect_uri': f"https://{client.NetworkingV1Api().read_namespaced_ingress('drone-ci', 'drone-ci').spec.rules[0].host}/callback"}
         ]
 
         for token_name in gitea_access_tokens:
