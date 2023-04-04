@@ -239,7 +239,8 @@ def main() -> None:
         ]
 
         gitea_oauth_apps = [
-            {'name': 'dex', 'redirect_uri': f"https://{client.NetworkingV1Api().read_namespaced_ingress('dex', 'dex').spec.rules[0].host}/callback"}
+            {'name': 'dex', 'redirect_uri': f"https://{client.NetworkingV1Api().read_namespaced_ingress('dex', 'dex').spec.rules[0].host}/callback"},
+            {'name': 'drone', 'redirect_uri': f"https://{client.NetworkingV1Api().read_namespaced_ingress('drone', 'drone').spec.rules[0].host}/callback"}
         ]
 
         for token_name in gitea_access_tokens:
@@ -249,7 +250,6 @@ def main() -> None:
             setup_gitea_oauth_app(app['name'], app['redirect_uri'])
         
         setup_harbor_robot_account('tekton')
-
 
 if __name__ == '__main__':
     main()

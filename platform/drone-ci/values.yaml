@@ -1,0 +1,24 @@
+drone:
+  ingress:
+    enabled: true
+    className: nginx
+    hosts:
+      - host: &host https://ci.atte.cloud
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: drone-tls-certificate
+        hosts:
+          - *host
+  persistentVolume:
+    enabled: true
+    storageClassName: longhorn
+  extraSecretNamesForEnvFrom:
+    - drone-env-secret
+  env:
+    DRONE_SERVER_HOST: ci.atte.cloud
+    DRONE_SERVER_PROTO: https
+    DRONE_GITEA_SERVER: https://gitea-http.gitea:3000/
+
+

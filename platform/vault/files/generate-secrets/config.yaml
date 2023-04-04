@@ -31,3 +31,10 @@
     - key: token
       length: 32
       special: false
+
+# Drone
+- path: drone/rpc
+  data:
+    - key: secret
+      length: 32
+      special: false
