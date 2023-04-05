@@ -75,7 +75,7 @@ def setup_gitea_access_token(name: str) -> None:
             sys.exit(1)
 
 
-def setup_gitea_oauth_app(name: str, redirect_uri: str, is_confidential: bool) -> None:
+def setup_gitea_oauth_app(name: str, redirect_uri: str) -> None:
     current_apps = requests.get(
         url=f"{gitea_url}/api/v1/user/applications/oauth2",
     ).json()
@@ -88,8 +88,7 @@ def setup_gitea_oauth_app(name: str, redirect_uri: str, is_confidential: bool) -
             },
             data=json.dumps({
                 'name': name,
-                'redirect_uris': [redirect_uri],
-                "confidential_client": is_confidential
+                'redirect_uris': [redirect_uri]
             })
         )
 
@@ -240,8 +239,7 @@ def main() -> None:
         ]
 
         gitea_oauth_apps = [
-            {'name': 'dex', 'redirect_uri': f"https://{client.NetworkingV1Api().read_namespaced_ingress('dex', 'dex').spec.rules[0].host}/callback", True},
-            {'name': 'drone', 'redirect_uri': f"https://{client.NetworkingV1Api().read_namespaced_ingress('drone-ci', 'drone-ci').spec.rules[0].host}/login", True}
+            {'name': 'dex', 'redirect_uri': f"https://{client.NetworkingV1Api().read_namespaced_ingress('dex', 'dex').spec.rules[0].host}/callback"}
         ]
 
         for token_name in gitea_access_tokens:
@@ -251,6 +249,7 @@ def main() -> None:
             setup_gitea_oauth_app(app['name'], app['redirect_uri'])
         
         setup_harbor_robot_account('tekton')
+
 
 if __name__ == '__main__':
     main()
