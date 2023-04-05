@@ -10,6 +10,7 @@ concourse:
           userNameKey: preferred_username
         mainTeam:
           oidc:
+            user: atte
             group: ops
   persistence:
     enabled: true
