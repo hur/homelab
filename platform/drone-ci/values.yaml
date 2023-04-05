@@ -23,7 +23,7 @@ drone:
     DRONE_SERVER_PROTO: https
     DRONE_GITEA_SERVER: https://git.atte.cloud
 
-drone-runner:
+drone-runner-docker:
   ingress:
     enabled: true
     className: nginx
@@ -42,6 +42,6 @@ drone-runner:
     - drone-runner-env-secret
   env:
     DRONE_RPC_HOST: drone
-    DRONE_RPC_PROTO: https 
+    DRONE_RPC_PROTO: https
 
 
