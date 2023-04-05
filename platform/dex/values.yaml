@@ -29,9 +29,14 @@ dex:
         redirectURIs:
           - 'https://harbor.atte.cloud/c/oidc/callback'
         secretEnv: HARBOR_SSO_CLIENT_SECRET
+      - id: concourse-sso
+        name: Concourse
+        redirectURIs:
+          - https://ci.atte.cloud/sky/issuer/callback
+        secret: concourse-sso-secret # TODO: use vault
   envFrom:
     - secretRef:
-        name: dex-secrets
+        name: dex-secrets    
   ingress:
     enabled: true
     className: nginx
