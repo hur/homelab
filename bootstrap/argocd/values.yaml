@@ -50,7 +50,4 @@ argo-cd:
         issuer: https://dex.atte.cloud
         clientID: argocd-sso
         clientSecret: $argocd-sso-secret:clientSecret
-        requestedIDTokenClaims:
-          groups:
-            essential: true
         requestedScopes: ["openid", "profile", "email", "groups"]
