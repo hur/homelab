@@ -31,3 +31,10 @@
     - key: token
       length: 32
       special: false
+
+# ArgoCD
+- path: dex/argocd
+  data:
+    - key: client_secret
+      length: 32
+      special: false

@@ -34,6 +34,11 @@ dex:
         redirectURIs:
           - https://ci.atte.cloud/sky/issuer/callback
         secret: concourse-sso-secret # TODO: use vault
+      - id: argocd-sso
+        name: ArgoCD
+        redirectURIs:
+          - https://argocd.atte.cloud/auth/callback
+        secretEnv: ARGOCD_SSO_CLIENT_SECRET
   envFrom:
     - secretRef:
         name: dex-secrets    
