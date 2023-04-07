@@ -12,6 +12,8 @@ concourse:
           oidc:
             user: atte
             group: ops
+    worker:
+      runtime: containerd
   persistence:
     enabled: true
     worker:
