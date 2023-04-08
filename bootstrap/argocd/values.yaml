@@ -51,3 +51,6 @@ argo-cd:
         clientID: argocd-sso
         clientSecret: $argocd-sso-secret:clientSecret
         requestedScopes: ["openid", "profile", "email", "groups"]
+    rbac:
+      policy.csv: |
+        g, ops, role:admin
