@@ -118,6 +118,31 @@ resource "kubernetes_secret" "cert_manager_token" {
   }
 }
 
+
+resource "cloudflare_ruleset" "redirect_www_to_root" {
+  zone_id     = data.cloudflare_zone.zone.id
+  name        = "redirect_www_to_root"
+  description = "Redirects www to apex"
+  kind        = "zone"
+  phase       = "http_request_dynamic_redirect"
+
+  rules {
+    action = "redirect"
+    action_parameters {
+      from_value {
+        status_code = 301
+        target_url {
+          value = "https://atte.cloud"
+        }
+        preserve_query_string = true
+      }
+    }
+    expression = "(starts_with(http.request.full_uri, \"https://www.atte.cloud\"))"
+    description = "Redirects www to apex"
+    enabled     = true
+  }
+}
+
 /*
 resource "cloudflare_ruleset" "redirect_root_to_www" {
   zone_id     = data.cloudflare_zone.zone.id
