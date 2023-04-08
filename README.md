@@ -31,7 +31,7 @@ This project utilizes [Infrastructure as Code](https://en.wikipedia.org/wiki/Inf
 - [ ] Support multiple environments (dev, prod)
 - [ ] Monitoring and alerting 🚧
 - [ ] Automated offsite backups
-- [ ] Single sign-on 🚧
+- [x] Single sign-on
 - [ ] Infrastructure testing
 ### Tech stack
 
