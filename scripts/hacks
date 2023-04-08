@@ -131,88 +131,31 @@ def setup_harbor_robot_account(name: str) -> None:
                 "duration": -1,  # no expiry
                 "description": "Robot account for tekton pipelines",
                 "disable": False,
-                "level": "system", 
+                "level": "system",
                 "permissions": [
                     {
                     "namespace": "*",  # TODO: finer grained permissions
                     "kind": "project",
                     "access": [
-                        {
-                        "resource": "repository",
-                        "action": "list"
-                        },
-                        {
-                        "resource": "repository",
-                        "action": "pull"
-                        },
-                        {
-                        "resource": "repository",
-                        "action": "push"
-                        },
-                        {
-                        "resource": "repository",
-                        "action": "delete"
-                        },
-                        {
-                        "resource": "artifact",
-                        "action": "read"
-                        },
-                        {
-                        "resource": "artifact",
-                        "action": "list"
-                        },
-                        {
-                        "resource": "artifact",
-                        "action": "delete"
-                        },
-                        {
-                        "resource": "artifact-label",
-                        "action": "create"
-                        },
-                        {
-                        "resource": "artifact-label",
-                        "action": "delete"
-                        },
-                        {
-                        "resource": "tag",
-                        "action": "create"
-                        },
-                        {
-                        "resource": "tag",
-                        "action": "delete"
-                        },
-                        {
-                        "resource": "tag",
-                        "action": "list"
-                        },
-                        {
-                        "resource": "scan",
-                        "action": "create"
-                        },
-                        {
-                        "resource": "scan",
-                        "action": "stop"
-                        },
-                        {
-                        "resource": "helm-chart",
-                        "action": "read"
-                        },
-                        {
-                        "resource": "helm-chart-version",
-                        "action": "create"
-                        },
-                        {
-                        "resource": "helm-chart-version",
-                        "action": "delete"
-                        },
-                        {
-                        "resource": "helm-chart-version-label",
-                        "action": "create"
-                        },
-                        {
-                        "resource": "helm-chart-version-label",
-                        "action": "delete"
-                        }
+                        {"resource": "repository", "action": "list"},
+                        {"resource": "repository", "action": "pull"},
+                        {"resource": "repository","action": "push"},
+                        {"resource": "repository","action": "delete"},
+                        {"resource": "artifact","action": "read"},
+                        {"resource": "artifact","action": "list"},
+                        {"resource": "artifact","action": "delete"},
+                        {"resource": "artifact-label","action": "create"},
+                        {"resource": "artifact-label","action": "delete"},
+                        {"resource": "tag","action": "create"},
+                        {"resource": "tag","action": "delete"},
+                        {"resource": "tag","action": "list"},
+                        {"resource": "scan","action": "create"},
+                        {"resource": "scan","action": "stop"},
+                        {"resource": "helm-chart","action": "read"},
+                        {"resource": "helm-chart-version","action": "create"},
+                        {"resource": "helm-chart-version","action": "delete"},
+                        {"resource": "helm-chart-version-label","action": "create"},
+                        {"resource": "helm-chart-version-label","action": "delete"}
                     ]
                     }
                 ]
@@ -230,7 +173,7 @@ def setup_harbor_robot_account(name: str) -> None:
             print(f"Error creating Harbor robot account for Tekton ({resp.status_code})")
             print(resp.content)
             sys.exit(1)
-    
+
 
 def main() -> None:
 
@@ -249,7 +192,7 @@ def main() -> None:
 
         for app in gitea_oauth_apps:
             setup_gitea_oauth_app(app['name'], app['redirect_uri'])
-        
+
         setup_harbor_robot_account('tekton')
 
 
