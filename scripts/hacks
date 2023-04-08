@@ -236,7 +236,8 @@ def main() -> None:
 
     with Console().status("Completing the remaining sorcery"):
         gitea_access_tokens = [
-            'renovate'
+            'renovate',
+            'concourse'
         ]
 
         gitea_oauth_apps = [
