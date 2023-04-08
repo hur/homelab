@@ -42,3 +42,15 @@ argo-cd:
     metrics: *metrics
   redis:
     metrics: *metrics
+  configs:
+    cm:
+      url: https://argocd.atte.cloud
+      oidc.config: |
+        name: Dex
+        issuer: https://dex.atte.cloud
+        clientID: argocd-sso
+        clientSecret: $argocd-sso-secret:clientSecret
+        requestedScopes: ["openid", "profile", "email", "groups"]
+    rbac:
+      policy.csv: |
+        g, ops, role:admin

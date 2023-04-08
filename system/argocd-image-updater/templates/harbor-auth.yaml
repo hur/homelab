@@ -16,3 +16,5 @@ spec:
   - secretKey: data
     remoteRef:
       key: /harbor/tekton-robot-account # TODO: rename to just robot account
+      conversionStrategy: Default
+      decodingStrategy: None

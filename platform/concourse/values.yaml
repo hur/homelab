@@ -1,0 +1,48 @@
+concourse:
+  concourse:
+    web:
+      externalUrl: https://ci.atte.cloud
+      auth:
+        oidc:
+          enabled: true
+          displayName: Dex
+          issuer: https://dex.atte.cloud
+          userNameKey: preferred_username
+        mainTeam:
+          oidc:
+            user: atte
+            group: ops
+    worker:
+      runtime: containerd
+  persistence:
+    enabled: true
+    worker:
+      size: 10Gi
+      storageClass: longhorn
+  postgresql:
+    persistence:
+      enabled: true
+      size: 8Gi
+      storageClass: longhorn
+  secrets: # todo from secrets preferably? 
+    oidcClientId: concourse-sso
+    oidcClientSecret: concourse-sso-secret # TODO: use k8s secrets & vault
+  #  vaultClientKey:
+  #  vaultClientToken:
+  web:
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        hajimari.io/appName: Concourse
+      hosts:
+        - &host ci.atte.cloud
+      tls:
+        - secretName: concourse-tls-certificate
+          hosts:
+            - *host
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true

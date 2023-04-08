@@ -17,11 +17,24 @@
   data:
     - key: password
       length: 32
-      special: true
+      special: false
+
+- path: dex/harbor
+  data:
+    - key: client_secret
+      length: 32
+      special: false
 
 # Tekton
 - path: tekton/webhook
   data:
     - key: token
+      length: 32
+      special: false
+
+# ArgoCD
+- path: dex/argocd
+  data:
+    - key: client_secret
       length: 32
       special: false
