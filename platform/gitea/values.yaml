@@ -39,7 +39,7 @@ gitea:
   extraContainerVolumeMounts:
     - name: gitea-themes
       mountPath: /data/gitea/public/css
-    - name: gitea-themes
+    - name: gitea-logos
       mountPath: /data/gitea/public/img
   extraVolumes:
     - name: gitea-themes
