@@ -132,9 +132,9 @@ This project utilizes [Infrastructure as Code](https://en.wikipedia.org/wiki/Inf
         <td>Automatically update dependencies</td>
     </tr>
     <tr>
-        <td><img width="32" src="https://avatars.githubusercontent.com/u/47602533?s=200&v=4"></td>
-        <td><a href="https://tekton.dev">Tekton</a></td>
-        <td>Cloud native solution for building CI/CD systems</td>
+        <td><img width="32" src="https://concourse-ci.org/images/logo-white.svg"></td>
+        <td><a href="https://concourse-ci.org/">Concourse</a></td>
+        <td>Open-source automation system used for CI/CD.</td>
     </tr>
     <tr>
         <td><img width="32" src="https://goharbor.io/img/logos/harbor-icon-color.png"></td>
@@ -145,11 +145,6 @@ This project utilizes [Infrastructure as Code](https://en.wikipedia.org/wiki/Inf
         <td><img width="32" src="https://simpleicons.org/icons/vault.svg"></td>
         <td><a href="https://www.vaultproject.io">Vault</a></td>
         <td>Secrets and encryption management system</td>
-    </tr>
-    <tr>
-        <td><img width="32" src="https://docs.zerotier.com/img/ZeroTierIcon.png"></td>
-        <td><a href="https://zerotier.com">ZeroTier</a></td>
-        <td>VPN without port forwarding</td>
     </tr>
 </table>
 
