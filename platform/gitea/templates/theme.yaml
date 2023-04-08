@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gitea-custom-theme-cm
+  namespace: {{ .Release.Namespace }}
+data:
+{{ (.Files.Glob "themes/*").AsConfig | indent 2 }}

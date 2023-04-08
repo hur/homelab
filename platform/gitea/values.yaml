@@ -28,8 +28,19 @@ gitea:
         REGISTER_MANUAL_CONFIRM: true
       log:
         ENABLE_ACCESS_LOG: true
+      ui:
+        DEFAULT_THEME: catppuccin-mocha-teal
+        THEMES: auto,gitea,arc-green,catppuccin-mocha-teal
   persistence:
     storageClass: longhorn
   postgresql:
     persistence:
       storageClass: longhorn
+  extraContainerVolumeMounts:
+    - name: gitea-themes
+      mountPath: /data/gitea/public/css
+  extraVolumes:
+    - name: gitea-themes
+      configMap:
+        name: gitea-custom-theme-cm
+
