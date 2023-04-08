@@ -3,5 +3,5 @@ name: harbor
 version: 0.0.0
 dependencies:
 - name: harbor
-  version: 16.4.5
+  version: 16.4.10
   repository: https://charts.bitnami.com/bitnami
