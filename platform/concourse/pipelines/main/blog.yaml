@@ -1,0 +1,42 @@
+resources:
+  - name: blog-git
+    type: git
+    icon: tea
+    source:
+      uri: https://git.atte.cloud/ops/blog.git
+      branch: master
+
+  - name: blog-image
+    type: registry-image
+    icon: docker
+    source:
+      repository: harbor.atte.cloud/library/blog
+      username: ((harbor-robot.name))
+      password: ((harbor-robot.token))
+      tag: latest
+
+jobs:
+  - name: build-and-push
+    plan:
+      - get: blog-git
+        trigger: true
+      - task: build-image
+        privileged: true  # oci-build-task must run in a privileged container
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: concourse/oci-build-task
+          inputs:
+            - name: blog-git
+          outputs:
+            - name: image
+          params:
+            CONTEXT: blog-git
+            DOCKERFILE: blog-git/Dockerfile.blog
+          run:
+            path: build
+      - put: blog-image
+        params:
+          image: image/image.tar

@@ -1,0 +1,23 @@
+resources:
+  - name: homelab-git
+    type: git
+    icon: tea
+    source:
+      uri: https://git.atte.cloud/ops/homelab.git
+
+jobs:
+  - name: configure-self
+    plan:
+      - get: homelab-git
+        trigger: true
+      - set_pipeline: manage-pipelines
+        file: homelab-git/platform/concourse/pipelines/main/bootstrap.yaml
+  - name: configure-pipelines
+    plan:
+      - get: homelab-git
+        trigger: true
+        passed: [configure-self]
+      - set_pipeline: blog
+        file: homelab-git/platform/concourse/pipelines/main/blog.yaml
+      - set_pipeline: blog-pr
+        file: homelab-git/platform/concourse/pipelines/main/blog-pr.yaml

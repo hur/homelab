@@ -1,0 +1,53 @@
+resource_types:
+  - name: pull-request
+    type: registry-image
+    source:
+      repository: atteniemi/gitea-pr-resource
+      tag: latest
+
+resources:
+  - name: pull-request
+    type: pull-request
+    #webhook_token: ((webhook-token))
+    source:
+      repository: ops/blog
+      endpoint: https://git.atte.cloud
+      access_token: ((gitea-access.token))
+      state: open
+
+jobs:
+  - name: test
+    plan:
+      - get: pull-request
+        trigger: true
+        version: every
+        params:
+          submodules: true
+      - put: pull-request
+        no_get: true  # skip the implied get to not wipe out submodules
+        params:
+          path: pull-request
+          status: pending
+      - task: test-build
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: ghcr.io/getzola/zola
+              tag: v0.17.1
+          inputs:
+            - name: pull-request
+          run:
+            path: zola
+            args: [-r, pull-request, build]
+        on_failure:
+          put: pull-request
+          params:
+            path: pull-request
+            status: failure
+      - put: pull-request
+        no_get: true
+        params:
+          path: pull-request
+          status: success
