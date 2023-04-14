@@ -12,13 +12,13 @@ jobs:
       - get: homelab-git
         trigger: true
       - set_pipeline: manage-pipelines
-        file: platform/concourse/pipelines/main/bootstrap.yaml
+        file: homelab-git/platform/concourse/pipelines/main/bootstrap.yaml
   - name: configure-pipelines
     plan:
       - get: homelab-git
         trigger: true
         passed: [configure-self]
       - set_pipeline: blog
-        file: platform/concourse/pipelines/main/blog.yaml
+        file: homelab-git/platform/concourse/pipelines/main/blog.yaml
       - set_pipeline: blog-pr
-        file: platform/concourse/pipelines/main/blog-pr.yaml
+        file: homelab-git/platform/concourse/pipelines/main/blog-pr.yaml
