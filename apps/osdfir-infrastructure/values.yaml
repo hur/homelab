@@ -8,7 +8,7 @@ persistence:
 timesketch:
   ingress:
     enabled: true
-    host: &host turbinia.atte.cloud
+    host: timesketch.atte.cloud
     className: nginx
   opensearch:
     enabled: true
@@ -74,7 +74,7 @@ timesketch:
 turbinia:
   ingress:
     enabled: true
-    host: &host turbinia.atte.cloud
+    host: turbinia.atte.cloud
     className: nginx
   server:
     image:
