@@ -5,3 +5,4 @@ dependencies:
   - name: osdfir-infrastructure
     version: 0.2.0
     repository: oci://us-docker.pkg.dev/osdfir-registry/osdfir-charts
+    alias: osdfir
