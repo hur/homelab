@@ -117,7 +117,7 @@ osdfir-infrastructure:
       #    cpu: 8000m
       #    memory: 16000Mi
     controller:
-      enabled: false
+      enabled: true
     redis:
       enabled: true
       sentinel:
