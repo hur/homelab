@@ -1,0 +1,153 @@
+persistence:
+  enabled: true
+  name: osdfirvolume
+  size: 1G
+  storageClass: "longhorn"
+  accessModes:
+    - ReadWriteMany
+timesketch:
+  ingress:
+    enabled: true
+    host: &host turbinia.atte.cloud
+    className: nginx
+  opensearch:
+    enabled: true
+    replicas: 1
+    sysctlInit:
+      enabled: true
+    opensearchJavaOpts: "-Xms4g -Xmx4g"
+    httpPort: 9200
+    persistence:
+      size: 1G
+      storageClass: longhorn
+    #resources:
+    #  requests:
+    #    cpu: 8000m
+    #    memory: 32Gi
+  redis:
+    enabled: true
+    sentinel:
+      enabled: false
+    master:
+      count: 1
+      persistence:
+        ## @param redis.master.persistence.size Redis master Persistent Volume size
+        ##
+        size: 500Mi
+      #resources:
+      #  requests:
+      #    cpu: 4000m
+      #    memory: 8Gi
+      #  limits:
+      #    cpu: 8000m
+      #    memory: 16Gi
+    replica:
+      replicaCount: 1
+      persistence:
+        size: 500Mi
+      #resources:
+      #  requests:
+      #    cpu: 4000m
+      #    memory: 8Gi
+      #  limits:
+      #    cpu: 8000m
+      #    memory: 16Gi
+  postgresql:
+    enabled: true
+    primary:
+      persistence:
+        size: 1G
+      #resources:
+      #  requests:
+      #    cpu: 250m
+      #    memory: 256Mi
+      #  limits: {}
+    readReplicas:
+      replicaCount: 1
+      persistence:
+        size: 1G
+      #resources:
+      #  requests:
+      #    cpu: 250m
+      #    memory: 256Mi
+      #  limits: {}
+turbinia:
+  ingress:
+    enabled: true
+    host: &host turbinia.atte.cloud
+    className: nginx
+  server:
+    image:
+      repository: us-docker.pkg.dev/osdfir-registry/turbinia/release/turbinia-server
+      pullPolicy: IfNotPresent
+      tag: latest
+    #resources:
+    #  requests:
+    #    cpu: 1000m
+    #    memory: 2000Mi
+    #  limits:
+    #    cpu: 8000m
+    #    memory: 16000Mi
+  worker:
+    image:
+      repository: us-docker.pkg.dev/osdfir-registry/turbinia/release/turbinia-worker
+      pullPolicy: IfNotPresent
+      tag: latest
+      imagePullSecrets: []
+    autoscaling:
+      enabled: true
+      minReplicas: 3
+      maxReplicas: 5
+      targetCPUUtilizationPercentage: 80
+    securityContext:
+      privileged: true
+    #resources:
+    #  requests:
+    #    cpu: 1500m
+    #    memory: 2048Mi
+    #  limits:
+    #    cpu: 31000m
+    #    memory: 65536Mi
+  api:
+    image:
+      repository: us-docker.pkg.dev/osdfir-registry/turbinia/release/turbinia-api-server
+      pullPolicy: IfNotPresent
+      tag: latest
+    podSecurityContext:
+      seccompProfile:
+        type: RuntimeDefault
+    #resources:
+    #  requests:
+    #    cpu: 2000m
+    #    memory: 4000Mi
+    #  limits:
+    #    cpu: 8000m
+    #    memory: 16000Mi
+  controller:
+    enabled: false
+  redis:
+    enabled: true
+    sentinel:
+      enabled: false
+    master:
+      count: 1
+      persistence:
+        size: 500Mi
+      #resources:
+      #  requests:
+      #    cpu: 4000m
+      #    memory: 500Gi
+      #  limits:
+      #    cpu: 8000m
+      #    memory: 16Gi
+    replica:
+      replicaCount: 1
+      persistence:
+        size: 500Mi
+     # resources:
+     #   requests:
+     #     cpu: 4000m
+     #     memory: 8Gi
+     #   limits:
+     #     cpu: 8000m
+     #     memory: 16Gi
