@@ -38,3 +38,15 @@
     - key: client_secret
       length: 32
       special: false
+
+- path: timesketch/postgres
+  data:
+    - key: postgres-password
+      length: 32
+      special: false
+    - key: password
+      length: 32
+      special: false
+    - key: replication-password
+      length: 32
+      special: false

@@ -1,4 +1,4 @@
-osdfir-infrastructure:
+osdfir:
   persistence:
     enabled: true
     name: osdfirvolume
@@ -7,6 +7,9 @@ osdfir-infrastructure:
     accessModes:
       - ReadWriteMany
   timesketch:
+    config:
+      #override: configs/*
+      createUser: true
     opensearch:
       enabled: true
       replicas: 1
@@ -51,6 +54,10 @@ osdfir-infrastructure:
         #    memory: 16Gi
     postgresql:
       enabled: true
+      auth:
+        username: postgres
+        database: timesketch
+        existingSecret: timesketch-postgresql-vault-secrets
       primary:
         persistence:
           size: 1G
