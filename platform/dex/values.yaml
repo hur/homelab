@@ -39,9 +39,14 @@ dex:
         redirectURIs:
           - https://argocd.atte.cloud/auth/callback
         secretEnv: ARGOCD_SSO_CLIENT_SECRET
+      - id: oauth2proxy-sso
+        name: OAuth2Proxy
+        redirectURIs:
+          - https://oauth.atte.cloud/auth/callback
+        secretEnv: OAUTH2PROXY_SSO_CLIENT_SECRET
   envFrom:
     - secretRef:
-        name: dex-secrets    
+        name: dex-secrets
   ingress:
     enabled: true
     className: nginx
