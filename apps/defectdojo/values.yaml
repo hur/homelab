@@ -1,0 +1,10 @@
+defectdojo:
+  imagePullPolicy: IfNotPresent
+  host: &host dojo.atte.cloud
+  django:
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      secretName: defectdojo-tls-certificate
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
