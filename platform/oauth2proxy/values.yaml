@@ -12,3 +12,7 @@ oauth2proxy:
         secretName: oauth2-proxy-tls-certificate
   config:
     existingSecret: oauth2proxy-secret
+    configFile: |
+      provider = "oidc"
+      oidc_issuer_url = "https://dex.atte.cloud"
+      email_domain = "*"
