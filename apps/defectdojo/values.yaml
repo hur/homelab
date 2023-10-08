@@ -8,3 +8,7 @@ defectdojo:
       secretName: defectdojo-tls-certificate
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
+
+  createSecret: true
+  createRabbitMqSecret: true
+  createPostgresqlSecret: true
