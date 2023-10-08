@@ -46,6 +46,12 @@
       length: 32
       special: false
 
+- path: oauth2proxy/cookie
+  data:
+    - key: cookie_secret
+      length: 32
+      special: false
+
 - path: timesketch/postgres
   data:
     - key: postgres-password
