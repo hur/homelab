@@ -42,7 +42,7 @@ dex:
       - id: oauth2proxy-sso
         name: OAuth2Proxy
         redirectURIs:
-          - https://oauth.atte.cloud/auth/callback
+          - https://oauth.atte.cloud/oauth2/callback
         secretEnv: OAUTH2PROXY_SSO_CLIENT_SECRET
   envFrom:
     - secretRef:
