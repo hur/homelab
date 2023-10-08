@@ -1,0 +1,14 @@
+oauth2proxy:
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - &host oauth.atte.cloud
+    tls:
+      - hosts:
+          - *host
+        secretName: oauth2-proxy-tls-certificate
+  config:
+    existingSecret: oauth2proxy-secret
