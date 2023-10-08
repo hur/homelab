@@ -15,4 +15,4 @@ oauth2proxy:
     configFile: |
       provider = "oidc"
       oidc_issuer_url = "https://dex.atte.cloud"
-      email_domain = "*"
+      email_domains = [ "*" ]
