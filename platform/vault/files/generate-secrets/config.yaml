@@ -39,6 +39,13 @@
       length: 32
       special: false
 
+# OAuth2Proxy
+- path: dex/oauth2proxy
+  data:
+    - key: client_secret
+      length: 32
+      special: false
+
 - path: timesketch/postgres
   data:
     - key: postgres-password
