@@ -1,2 +1,18 @@
 securecodebox-operator:
   telemetryEnabled: false
+  minio:
+    enabled: true
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+        - host: &host minio.atte.cloud
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - secretName: minio-tls-certificate
+          hosts:
+            - *host
