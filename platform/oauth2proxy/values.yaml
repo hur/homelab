@@ -16,3 +16,4 @@ oauth2proxy:
       provider = "oidc"
       oidc_issuer_url = "https://dex.atte.cloud"
       email_domains = [ "*" ]
+      whitelist_domains = [ ".atte.cloud" ]
