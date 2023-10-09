@@ -14,7 +14,7 @@ defectdojo:
   createPostgresqlSecret: true
 
   extraConfigs:
-    DD_AUTH_REMOTEUSER_ENABLED: True
+    DD_AUTH_REMOTEUSER_ENABLED: "true"
     DD_AUTH_REMOTEUSER_USERNAME_HEADER: X-Forwarded-Preferred-Username
     DD_AUTH_REMOTEUSER_EMAIL_HEADER: X-Forwarded-Email
     DD_SOCIAL_LOGIN_AUTO_REDIRECT: "true"
