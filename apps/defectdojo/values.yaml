@@ -12,3 +12,11 @@ defectdojo:
   createSecret: true
   createRabbitMqSecret: true
   createPostgresqlSecret: true
+
+  extraConfigs:
+    DD_AUTH_REMOTEUSER_ENABLED: True
+    DD_AUTH_REMOTEUSER_USERNAME_HEADER: X-Forwarded-Preferred-Username
+    DD_AUTH_REMOTEUSER_EMAIL_HEADER: X-Forwarded-Email
+    DD_SOCIAL_LOGIN_AUTO_REDIRECT: "true"
+    DD_AUTH_REMOTEUSER_TRUSTED_PROXY: 10.43.0.0/16
+    DD_SOCIAL_AUTH_SHOW_LOGIN_FORM: "false"
