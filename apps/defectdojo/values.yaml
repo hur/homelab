@@ -11,6 +11,6 @@ defectdojo:
         #nginx.ingress.kubernetes.io/auth-url: "https://oauth.atte.cloud/oauth2/auth"
         #nginx.ingress.kubernetes.io/auth-signin: "https://oauth.atte.cloud/oauth2/start?rd=$escaped_request_uri"
 
-  createSecret: false
-  createRabbitMqSecret: false
-  createPostgresqlSecret: false
+  createSecret: true
+  createRabbitMqSecret: true
+  createPostgresqlSecret: true
