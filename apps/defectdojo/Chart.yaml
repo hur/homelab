@@ -1,7 +1,0 @@
-apiVersion: v2
-name: defectdojo
-version: 0.0.0
-dependencies:
-  - name: defectdojo
-    version: 1.6.89
-    repository: https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts
