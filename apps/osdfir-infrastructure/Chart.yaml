@@ -4,5 +4,5 @@ version: 0.0.0
 dependencies:
   - name: osdfir-infrastructure
     version: 0.3.3
-    repository: https://hur.github.io/charts
+    repository: https://google.github.io/osdfir-infrastructure
     alias: osdfir
