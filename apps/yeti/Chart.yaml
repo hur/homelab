@@ -1,0 +1,17 @@
+apiVersion: v2
+name: yeti
+description: A Helm chart for Yeti
+type: application
+version: 0.1.0
+appVersion: "1.16.0"
+home: "https://github.com/yeti-platform/yeti"
+dependencies:
+  - name: redis
+    version: 18.0.4
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
+  - name: kube-arangodb
+    version: 1.2.35
+    repository: https://arangodb.github.io/kube-arangodb
+    alias: arangodb-operator
+    condition: arangodb-operator.enabled

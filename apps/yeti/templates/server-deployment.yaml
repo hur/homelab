@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "yeti.fullname" . }}-server
+  namespace: {{ .Release.namespace | quote }}
+  labels:
+    app.kubernetes.io/component: server
+    {{- include "yeti.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.server.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "yeti.server.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.server.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "yeti.server.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "yeti.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.server.podSecurityContext | nindent 8 }}
+      containers:
+        - name: server
+          securityContext:
+            {{- toYaml .Values.server.securityContext | nindent 12 }}
+          image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.server.image.imagePullPolicy }}
+          # We cannot use /docker_entrypoint.sh webserver here, since in order to support a TLS terminating reverse proxy we need to be able to set --forwarded-allow-ips.
+          # We set --forwarded-allow-ips * to trust the X-Forwarded-For and X-Forwarded-Proto set by the ingress which exposes yeti.
+          # TODO: consider extending docker-entrypoint.sh in the yeti docker image instead of setting this here.
+          command: ["poetry"]
+          args: ["run", "uvicorn", "core.web.webapp:app", "--reload", "--host", "0.0.0.0", "--forwarded-allow-ips", "*"]
+          env:
+            - name: YETI_REDIS_HOST
+              value: {{ include "redis.servicename" . }}
+            - name: YETI_REDIS_PORT
+              value: {{ include "redis.port" . | quote }}
+            - name: YETI_REDIS_DATABASE
+              value: "0"  # TODO(hur): investigate if this needs to be configurable
+            - name: YETI_ARANGODB_HOST
+              value: {{ .Release.Name }}-arangodb-cluster
+            - name: YETI_ARANGODB_PORT
+              value: "8529"  # TODO: configure
+            - name: YETI_ARANGODB_DATABASE
+              value: "yeti"
+            #{{- if .Values.server.config.existingSecret }}
+            #- name: YETI_ARANGODB_USERNAME
+            #  valueFrom:
+            #    secretKeyRef:
+            #      key: username
+            #      name: {{ .Values.server.config.existingSecret }}
+            #- name: YETI_ARANGODB_PASSWORD
+            #  valueFrom:
+            #    secretKeyRef:
+            #      key: password
+            #      name: {{ .Values.server.config.existingSecret }}
+            #{{- else }}
+            - name: YETI_ARANGODB_USERNAME
+              value: "root"
+            - name: YETI_ARANGODB_PASSWORD
+              value: ""    # TODO:
+            #{{- end }}
+            - name: YETI_AUTH_SECRET_KEY
+              value: "secret"
+            - name: YETI_AUTH_ALGORITHM
+              value: "HS256"
+            - name: YETI_AUTH_ACCESS_TOKEN_EXPIRE_MINUTES
+              value: "30"
+            - name: YETI_AUTH_ENABLED
+              value: "False"
+            {{- if .Values.server.extraEnv }}
+            {{- toYaml .Values.server.extraEnv | nindent 8 }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          #livenessProbe:
+          #  httpGet:
+          #    path: /
+          #    port: http
+          #readinessProbe:
+          #  httpGet:
+          #    path: /
+          #    port: http
+          resources:
+            {{- toYaml .Values.server.resources | nindent 12 }}
+      {{- with .Values.server.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.server.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.server.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

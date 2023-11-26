@@ -1,0 +1,105 @@
+# Default values for yeti.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+clusterDomain: cluster.local
+
+server:
+  config:
+    existingSecret: ""
+  replicaCount: 1
+  image:
+    repository: docker.io/yetiplatform/yeti
+    tag: "2.0.2"
+    imagePullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 8000
+  imagePullSecrets: []
+  nameOverride: ""
+  fullnameOverride: ""
+  podAnnotations: {}
+  podSecurityContext: {}
+  securityContext: {}
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+worker:
+  replicaCount: 1
+  # TODO(hur): drop privileges by default. The worker container doesn't support this currently.
+  #            running celery as root is dangerous if pickle serialization is enabled.
+  #securityContext:
+  #  capabilities:
+  #    drop:
+  #      - ALL
+  #  runAsNonRoot: true
+  #  runAsUser: 1000
+
+frontend:
+  replicaCount: 1
+  image:
+    repository: docker.io/yetiplatform/yeti-frontend
+    tag: "2.0.1"
+    imagePullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+  imagePullSecrets: []
+  nameOverride: ""
+  fullnameOverride: ""
+  podAnnotations: {}
+  podSecurityContext: {}
+  securityContext: {}
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: &host yeti.atte.cloud
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: yeti-tls-certificate
+      hosts:
+        - *host
+
+redis:
+  enabled: true
+  auth:
+    enabled: false
+  service:
+    ports:
+      redis: 6379
+
+arangodb-operator:
+  enabled: true
+
+arango:
+  enabled: true
+  image:
+    repository: "arangodb/arangodb"
+    tag: "3.9.3"
+  auth:
+    existingSecret: null
+  # ArangoDB uses port 8528 and endpoint /metrics for publishing metrics.
+  metrics:
+    enabled: false

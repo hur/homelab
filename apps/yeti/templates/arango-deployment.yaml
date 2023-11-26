@@ -1,0 +1,18 @@
+apiVersion: "database.arangodb.com/v1"
+kind: "ArangoDeployment"
+metadata:
+  name: {{ .Release.Name }}-arangodb-cluster
+  namespace: {{ .Release.Namespace }}
+spec:
+  mode: Single
+  environment: Production
+  image: "{{ .Values.arango.image.repository }}:{{ .Values.arango.image.tag }}"
+  bootstrap:
+    passwordSecretNames:  # https://github.com/arangodb/kube-arangodb/blob/master/docs/api/ArangoDeployment.V1.md#specbootstrappasswordsecretnames
+      root: {{ .Values.arango.auth.existingSecret }}  # TODO: root password from secret
+  metrics:
+    enabled: {{ .Values.arango.metrics.enabled }}
+  auth:
+    jwtSecretName: None  # TODO
+  tls:
+    caSecretName: None  # TODO
